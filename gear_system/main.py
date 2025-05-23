@@ -6,15 +6,10 @@ from collections import deque
 
 def parse_input(input_str):
     state_match = re.search(r'\[(.*?)\]', input_str)
-    if not state_match:
-        raise ValueError("Nem megfelelő formátum a bemenetben! (Nincs lista)")
     state_text = state_match.group(0)
-    try:
-        target_state = eval(state_text)
-        if not (isinstance(target_state, list) and len(target_state) == 3):
-            raise ValueError
-    except:
-        raise ValueError("Nem megfelelő formátum a lista elemei vagy formátuma!")
+    target_state = eval(state_text)
+    if not (isinstance(target_state, list) and len(target_state) == 3):
+        raise ValueError
     
     rest = input_str[state_match.end():].strip()
     if rest:
@@ -59,14 +54,8 @@ def bfs_solution(target_state, max_moves):
                 queue.append((new_state, new_moves))
     return None
 
-try:
-    target_state, max_moves = parse_input(input)
-except Exception as e:
-    print("Bemeneti hiba:", e)
-    exit(1)
+target_state, max_moves = parse_input(input)
 
 solution_moves = bfs_solution(target_state, max_moves)
-if solution_moves is None:
-    print("Megoldhatatlan")
-else:
-    print(" ".join(solution_moves))
+
+print(" ".join(solution_moves))

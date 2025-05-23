@@ -11,7 +11,7 @@ def equation(x):
 initial_guess = 1.0
 solution = fsolve(equation, initial_guess)[0]
 
-print(f"2.: {solution}")
+print(f"2.: {solution:.2f}")
 
 
 sum_value = 0
@@ -68,4 +68,4 @@ e = symbols('e')
 equation = Eq(e, 1/6 + (5/6)*(5/6)*e)
 solution = solve(equation, e)
 
-print(f"7.: {solution[0]}")
+print(f"7.: {solution[0]:.2f}")

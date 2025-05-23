@@ -43,13 +43,11 @@ for line in input.splitlines():
     parts = line.split()
     if len(parts) != 2:
         continue
-    try:
-        low = int(parts[0])
-        high = int(parts[1])
-        expr = get_dice_expression(low, high)
-        results.append(expr)
-    except Exception as e:
-        results.append("Error")
+    
+    low = int(parts[0])
+    high = int(parts[1])
+    expr = get_dice_expression(low, high)
+    results.append(expr)
 
 for res in results:
     print(res)
