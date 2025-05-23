@@ -1,0 +1,68 @@
+1.
+A kör középpontja a négyzet közepén van, ezért a négyzet oldala 2R, és a középpont koordinátái (R, R).
+A téglalap bal alsó sarkának koordinátái (2R–1, 2R-2).
+A téglalap bal alsó sarkának távolsága a kör középpontjától √[(R–1)²+(R–2)²] = R.
+Négyzetre emelve az egyenlet: (R–1)²+(R–2)² = r², ami átrendezve r² – 6r + 5 = 0
+Megoldva a másodfokú egyenletet: R=1 vagy R=5, de az 1 látszólag nem lehetséges.
+
+
+3. (1/√[1]+√[2])+(1/√[2]+√[3])+(1/√[3]+√[4])+...+(1/√[99]+√[100]) = √[100]-√[1] = (√[2]-√[1])+(√[3]-√[2])+(√[4]-√[3])+...+(√[100]-√[99]) = 10-1 = 9
+
+
+4.
+
+(n^2)^n-2n^2+1=0
+n^2n-2n^2+1=0
+
+
+5.
+
+Amit nem ismerünk:
+M, azaz a macska magassága
+T, azaz a teknős magassága
+A, azaz az asztal magassága
+
+Két esetet viszont ismerünk:
+M+A-T = 170cm
+T+A-M = 130cm
+
+Ebből csinálhatunk egyenletrendszert:
+/ M+A-T = 170cm
+\ T+A-M = 130cm
+
+Ezt pedig megoldhatjuk az A-ra.
+
+
+6.
+
+Amit nem ismerünk:
+M, azaz a macska súlya
+K, azaz a kutya súlya
+E, azaz az egér súlya
+
+Három esetet viszont ismerünk:
+M+E = 10kg
+K+E = 20kg
+K+M = 24kg
+
+Ebből csinálhatunk egyenletrendszert:
+/ M+E = 10kg
+| K+E = 20kg
+\ K+M = 24kg
+
+
+7.
+
+Anna és Balázs felváltva dobnak egy szabályos dobókockával. Anna kezd, és az nyer, aki először hatost dob. A játék véget ér, amint valaki hatost dob. Mekkora az esélye annak, hogy Anna nyeri a játékot?
+
+Amit nem ismerünk:
+e, azaz az esélye annak, hogy Anna nyer.
+
+Az esélyt úgy számoljuk ki, hogy figyelembe vesszük az első dobás sikerét, majd ha Anna nem dob hatost, akkor Balázs dobását, majd az egész folyamat ismétlődik.
+- Anna dob, annak a valószínűsége, hogy hatost dob, (1/6). Ilyenkor Anna nyer.
+- Ha Anna nem dob hatost (melynek valószínűsége (5/6)), akkor Balázs dobását nézzük. Ha Balázs dob hatost (1/6), Balázs nyer, Anna veszít.
+- Ha egyikük sem dob hatost az első körben (melynek valószínűsége (5/6)*(5/6)=(25/36)), akkor a játék ugyanott folytatódik, mint az elején, tehát Anna esélye újra e.
+
+Az egyenlet Anna nyerési esélyére:
+
+e = (1/6)+(5/6)*(5/6)*e = (1/6)+(5/6)^2*e = (6/11)
