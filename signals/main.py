@@ -1,5 +1,3 @@
-import json
-
 with open('./input.txt', 'r') as f:
   input = f.read()
 
@@ -32,4 +30,4 @@ while progress:
                     possibilities[other].remove(letter)
             progress = True
 
-print(json.dumps(assignment, indent=4))
+print(assignment)

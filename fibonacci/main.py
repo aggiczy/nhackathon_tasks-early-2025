@@ -26,6 +26,6 @@ for line in lines:
         a, b = b, a + b
 
     if fib_div3:
-        print(",".join(map(str, fib_div3)))
+        print(", ".join(map(str, fib_div3)))
     else:
         print("N/A")
