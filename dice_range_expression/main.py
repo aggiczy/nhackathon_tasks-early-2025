@@ -1,4 +1,4 @@
-with open('dice_range_expression/input.txt', 'r') as f:
+with open('./input.txt', 'r') as f:
   input = f.read()
 
 def get_dice_expression(min_val, max_val):

@@ -1,4 +1,4 @@
-with open('gear_system/input.txt', 'r') as f:
+with open('./input.txt', 'r') as f:
   input = f.read()
 
 import re
