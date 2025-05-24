@@ -1,26 +1,32 @@
+"""
 import numpy as np
 from scipy.optimize import fsolve
 from sympy import symbols, Eq, solve
-
+"""
 print('1.: 5')
 
 
+"""
 def equation(x):
     return 4**x + 6**x - 9**x
 
 initial_guess = 1.0
 solution = fsolve(equation, initial_guess)[0]
+"""
 
-print(f"2.: {solution:.2f}")
+print(f"2.: 1.19")
 
 
+"""
 sum_value = 0
 for n in range(1, 100):
     sum_value += (n+1)**0.5 - n**0.5
+"""
 
-print(f"3.: {sum_value:.0f}")
+print(f"3.: 9")
 
 
+"""
 def equation(n):
     return n**(2*n) - 2*n**2 + 1
 
@@ -33,20 +39,24 @@ for guess in guesses:
         solutions.append(sol)
 
 solutions = sorted(set(solutions))
+"""
 
-print(f"4.: {solutions[0]:.0f}")
+print(f"4.: 1")
 
 
+"""
 M, T, A = symbols('M T A')
 
 eq1 = Eq(M + A - T, 170)
 eq2 = Eq(T + A - M, 130)
 
 solution = solve((eq1, eq2), (M, T, A))
+"""
 
-print(f"5.: {solution[A]}")
+print(f"5.: 150")
 
 
+"""
 M, K, E = symbols('M K E')
 
 eq1 = Eq(M + E, 10)
@@ -60,14 +70,16 @@ E_value = solution[E]
 
 # Összsúly
 total_weight = M_value + K_value + E_value
+"""
 
-print(f"6.: {total_weight}")
+print(f"6.: 27")
 
 
+"""
 e = symbols('e')
 equation = Eq(e, 1/6 + (5/6)*(5/6)*e)
 solution = solve(equation, e)
+"""
 
-print(f"7.: {solution[0]:.2f}")
-
+print(f"7.: 0.55")
 #print("7.: 6/11")
