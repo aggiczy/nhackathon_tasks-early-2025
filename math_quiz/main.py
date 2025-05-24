@@ -64,12 +64,10 @@ total_weight = M_value + K_value + E_value
 print(f"6.: {total_weight}")
 
 
-""""
 e = symbols('e')
 equation = Eq(e, 1/6 + (5/6)*(5/6)*e)
 solution = solve(equation, e)
 
-print(f"7.: {solution[0]:.2f}")"
-"""
+print(f"7.: {solution[0]:.2f}")
 
-print("7.: 6/11")
+#print("7.: 6/11")
