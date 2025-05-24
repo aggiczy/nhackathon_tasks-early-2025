@@ -53,7 +53,7 @@ backtrack(0, {})
 
 if found is not None:
     result_lines = ["{"]
-    for k in sorted(found.keys()):
+    for k in sorted(found.keys(), reverse=True):
         result_lines.append(f'    "{k}": "{found[k]}",')
     if len(result_lines) > 1:
         result_lines[-1] = result_lines[-1].rstrip(',')
