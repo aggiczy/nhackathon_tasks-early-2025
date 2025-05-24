@@ -71,13 +71,10 @@ def backtrack(idx):
     return False
 
 ok = backtrack(0)
-if not ok:
-    print(json.dumps({}))
-    sys.exit(0)
 
 result = {}
 for i, c in enumerate(code_list):
     e_idx = assignments[i]
     result[c] = event_list[e_idx]
 
-print(json.dumps(result, ensure_ascii=False))
+print(json.dumps(result, ensure_ascii=False, indent=4))
