@@ -1,87 +1,50 @@
 with open('./input.txt', 'r') as f:
     input = f.read()
 
-dice_options = [2, 3, 4, 6, 8, 10, 20]
+dice_options = [20, 10, 8, 6, 4, 3, 2]
 
-memo_combinations = {}
-
-def find_first_combination_recursive(k, current_target_sum, start_idx, current_combo_list):
-    state = (k, current_target_sum, start_idx, tuple(sorted(current_combo_list)))
-    if state in memo_combinations:
-        return list(memo_combinations[state]) if memo_combinations[state] is not None else None
-
-    if k == 0:
-        return list(current_combo_list) if current_target_sum == 0 else None
+def dice_expression(min_val: int, max_val: int):
+    dice_range = (max_val - min_val + 1)
+    if min_val >= 0:
+        shift_val = max_val - dice_range
+    else:
+        shift_val = min_val - 1
     
-    if current_target_sum < 0:
-        return None
-
-    if start_idx >= len(dice_options) or \
-       k * dice_options[start_idx] > current_target_sum or \
-       k * dice_options[-1] < current_target_sum:
-        return None
-
-    for i in range(start_idx, len(dice_options)):
-        die_val = dice_options[i]
-        current_combo_list.append(die_val)
-        
-        result = find_first_combination_recursive(k - 1, current_target_sum - die_val, i, current_combo_list)
-        
-        current_combo_list.pop()
-        if result:
-            memo_combinations[state] = list(result)
-            return result
+    used_dice = []
     
-    memo_combinations[state] = None
-    return None
+    for sides in dice_options:
+        while dice_range - sides >= 0 and (dice_range % 2 != 0):
+            while (dice_range % 2 != 0) and (dice_range - sides >= 0):
+                used_dice.append(3)
+                dice_range -= 3
+        while dice_range - sides >= 0 and (dice_range % 2 == 0):
+            used_dice.append(sides)
+            dice_range -= sides
 
-def merge_dice_terms(dice_list):
-    from collections import Counter
-    counts = Counter(dice_list)
+    used_dice.sort(reverse=True)
+    counts = {}
+    for d in used_dice:
+        counts[d] = counts.get(d, 0) + 1
+
     merged_parts = []
-    for side, count in sorted(counts.items()):
+    for side, count in counts.items():
         merged_parts.append(f"{count}d{side}")
-    return "+".join(merged_parts)
+    dice_expr = "+".join(merged_parts)
+    
+    if shift_val > 0:
+        dice_expr += f"+{shift_val}"
+    elif shift_val < 0:
+        dice_expr += f"{shift_val}"
 
-lines = input.strip().split('\n')
-results_to_print = []
+    print(dice_expr)
 
-for line in lines:
-    if not line.strip():
+lines = input.strip().split("\n")
+for l in lines:
+    if not l.strip():
         continue
-    parts = line.split()
-    min_val = int(parts[0])
-    max_val = int(parts[1])
-
-    L_target = max_val - min_val + 1
-
-    found_solution_for_line = False
-    max_n_dice_to_check = 6
-    for n_dice in range(1, max_n_dice_to_check + 1):
-        target_sum_for_combination = L_target + n_dice - 1
-        
-        # Quick checks for sum feasibility given the smallest/largest dice
-        if target_sum_for_combination < n_dice * dice_options[0] or \
-            target_sum_for_combination > n_dice * dice_options[-1]:
-            continue
-
-        chosen_combo_sides = find_first_combination_recursive(
-            n_dice, target_sum_for_combination, 0, []
-        )
-
-        if chosen_combo_sides:
-            offset = min_val - n_dice
-            # Merge repeated dice into, e.g., 2d20 instead of 1d20+1d20
-            dice_str = merge_dice_terms(chosen_combo_sides)
-            
-            if offset > 0:
-                dice_str += f"+{offset}"
-            elif offset < 0:
-                dice_str += f"{offset}"
-            
-            results_to_print.append(dice_str)
-            found_solution_for_line = True
-            break
-
-for res in results_to_print:
-    print(res)
+    parts = l.split()
+    if len(parts) < 2:
+        continue
+    minimum = int(parts[0])
+    maximum = int(parts[1])
+    dice_expression(minimum, maximum)
