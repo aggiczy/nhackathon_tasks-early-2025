@@ -9,7 +9,7 @@ for line in lines:
         continue
 
     try:
-        n = int(test_case)
+        n = float(test_case)
     except ValueError:
         print("N/A")
         continue
