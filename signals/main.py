@@ -77,4 +77,4 @@ for i, c in enumerate(code_list):
     e_idx = assignments[i]
     result[c] = event_list[e_idx]
 
-print(json.dumps(result, ensure_ascii=False, indent=4))
+print(result)
