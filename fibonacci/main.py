@@ -1,5 +1,5 @@
 with open('./input.txt', 'r') as f:
-  input = f.read()
+    input = f.read()
 
 lines = input.splitlines()
 

@@ -1,53 +1,52 @@
 with open('./input.txt', 'r') as f:
-  input = f.read()
+    input = f.read()
 
 def get_dice_expression(min_val, max_val):
     diff = max_val - min_val
-    if diff == 0:
-        return str(min_val)
+    dice_sides = [20, 10, 8, 6, 4, 3, 2]
 
-    coins = [19, 9, 7, 5, 3, 2, 1]
+    def backtrack(target, n, start=0):
+        if n == 0:
+            return [] if target == 0 else None
+        max_possible = dice_sides[0] * n
+        min_possible = dice_sides[-1] * n
+        if target < min_possible or target > max_possible:
+            return None
 
-    result_coins = []
-    remaining = diff
-    for coin in coins:
-        while remaining >= coin:
-            result_coins.append(coin)
-            remaining -= coin
+        for i in range(start, len(dice_sides)):
+            side = dice_sides[i]
+            if side <= target:
+                result = backtrack(target - side, n - 1, i)
+                if result is not None:
+                    return [side] + result
+        return None
 
-    result_coins.sort()
-    
-    k = len(result_coins)
-    
-    offset = min_val - k
-    
-    dice_terms = []
-    for coin in result_coins:
-        die_val = coin + 1
-        dice_terms.append(f"1d{die_val}")
-    
-    expr = "+".join(dice_terms)
-    if offset > 0:
-        expr += f"+{offset}"
-    elif offset < 0:
-        expr += f"{offset}"
-    
-    return expr
+    for N in range(1, 7):
+        target_sum = diff + N
+        if target_sum < N * 2:
+            continue
+        combo = backtrack(target_sum, N)
+        if combo is not None:
+            offset = min_val - N
+            expression_parts = []
+            for side in combo:
+                expression_parts.append(f"1d{side}")
+            expression = "+".join(expression_parts)
+            if offset > 0:
+                expression += f"+{offset}"
+            elif offset < 0:
+                expression += f"{offset}"
+            return expression
+
+    return "Impossible"
 
 
-results = []
-for line in input.splitlines():
-    line = line.strip()
-    if not line:
-        continue
-    parts = line.split()
+lines = input.strip().split("\n")
+for line in lines:
+    parts = line.strip().split()
     if len(parts) != 2:
         continue
-    
-    low = int(parts[0])
-    high = int(parts[1])
-    expr = get_dice_expression(low, high)
-    results.append(expr)
-
-for res in results:
-    print(res)
+    min_v = int(parts[0])
+    max_v = int(parts[1])
+    result = get_dice_expression(min_v, max_v)
+    print(result)

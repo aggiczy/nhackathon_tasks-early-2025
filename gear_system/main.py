@@ -1,5 +1,5 @@
 with open('./input.txt', 'r') as f:
-  input = f.read()
+    input = f.read()
 
 import re
 from collections import deque
@@ -54,8 +54,13 @@ def bfs_solution(target_state, max_moves):
                 queue.append((new_state, new_moves))
     return None
 
-target_state, max_moves = parse_input(input)
-
-solution_moves = bfs_solution(target_state, max_moves)
-
-print(" ".join(solution_moves))
+lines = input.strip().splitlines()
+for line in lines:
+    if line.strip() == "":
+        continue
+    target_state, max_moves = parse_input(line)
+    solution_moves = bfs_solution(target_state, max_moves)
+    if solution_moves is None:
+        print("Megoldhatatlan")
+    else:
+        print(" ".join(solution_moves))

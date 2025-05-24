@@ -1,33 +1,64 @@
-with open('./input.txt', 'r') as f:
-  input = f.read()
+with open('signals/input.txt', 'r') as f:
+    input = f.read()
 
 import ast
+from collections import defaultdict
 
 data = ast.literal_eval(input)
 
-possibilities = {}
+code_candidates = {}
+code_days = defaultdict(list)
 
-for codes, events in data:
+for day in data:
+    codes, events = day
     event_set = set(events)
     for code in codes:
-        if code in possibilities:
-            possibilities[code] &= event_set
-        else:
-            possibilities[code] = set(event_set)
+        code_days[code].append(event_set)
 
-assignment = {}
+for code in code_days:
+    candidate = set.intersection(*code_days[code])
+    code_candidates[code] = candidate
 
-progress = True
-while progress:
-    progress = False
-    for code, opts in list(possibilities.items()):
-        if len(opts) == 1:
-            letter = next(iter(opts))
-            assignment[code] = letter
-            del possibilities[code]
-            for other in possibilities:
-                if letter in possibilities[other]:
-                    possibilities[other].remove(letter)
-            progress = True
+codes_list = list(code_candidates.keys())
 
-print(assignment)
+solution = {}
+
+def valid_assignment(assignment):
+    for codes, events in data:
+        if all(c in assignment for c in codes):
+            day_assigned = [assignment[c] for c in codes]
+            if sorted(day_assigned) != sorted(events):
+                return False
+    return True
+
+found = None
+
+def backtrack(i, assignment):
+    global found
+    if i == len(codes_list):
+        if valid_assignment(assignment):
+            found = assignment.copy()
+            return True
+        return False
+    code = codes_list[i]
+    for candidate in code_candidates[code]:
+        assignment[code] = candidate
+        if valid_assignment(assignment):
+            if backtrack(i + 1, assignment):
+                return True
+    del assignment[code]
+    return False
+
+backtrack(0, {})
+
+if found is not None:
+    result_lines = ["{"]
+    for k in sorted(found.keys()):
+        result_lines.append(f'    "{k}": "{found[k]}",')
+    if len(result_lines) > 1:
+        result_lines[-1] = result_lines[-1].rstrip(',')
+    result_lines.append("}")
+    decoded = "\n".join(result_lines)
+    print(decoded)
+else:
+    print("No valid decoding found")
