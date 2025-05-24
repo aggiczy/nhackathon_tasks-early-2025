@@ -1,4 +1,4 @@
-with open('./input.txt', 'r') as f:
+with open('signals/input.txt', 'r') as f:
     input = f.read()
 
 import ast
@@ -51,14 +51,4 @@ def backtrack(i, assignment):
 
 backtrack(0, {})
 
-if found is not None:
-    result_lines = ["{"]
-    for k in sorted(found.keys(), reverse=True):
-        result_lines.append(f'    "{k}": "{found[k]}",')
-    if len(result_lines) > 1:
-        result_lines[-1] = result_lines[-1].rstrip(',')
-    result_lines.append("}")
-    decoded = "\n".join(result_lines)
-    print(decoded)
-else:
-    print("No valid decoding found")
+print(found)
