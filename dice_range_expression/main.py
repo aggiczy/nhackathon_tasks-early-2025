@@ -17,8 +17,8 @@ def find_first_combination_recursive(k, current_target_sum, start_idx, current_c
         return None
 
     if start_idx >= len(dice_options) or \
-        k * dice_options[start_idx] > current_target_sum or \
-        k * dice_options[-1] < current_target_sum:
+       k * dice_options[start_idx] > current_target_sum or \
+       k * dice_options[-1] < current_target_sum:
         return None
 
     for i in range(start_idx, len(dice_options)):
@@ -34,6 +34,14 @@ def find_first_combination_recursive(k, current_target_sum, start_idx, current_c
     
     memo_combinations[state] = None
     return None
+
+def merge_dice_terms(dice_list):
+    from collections import Counter
+    counts = Counter(dice_list)
+    merged_parts = []
+    for side, count in sorted(counts.items()):
+        merged_parts.append(f"{count}d{side}")
+    return "+".join(merged_parts)
 
 lines = input.strip().split('\n')
 results_to_print = []
@@ -52,29 +60,26 @@ for line in lines:
     for n_dice in range(1, max_n_dice_to_check + 1):
         target_sum_for_combination = L_target + n_dice - 1
         
-        if L_target == 1 and n_dice > 0:
-            pass
-
+        # Quick checks for sum feasibility given the smallest/largest dice
         if target_sum_for_combination < n_dice * dice_options[0] or \
             target_sum_for_combination > n_dice * dice_options[-1]:
             continue
 
-        chosen_combo_sides = find_first_combination_recursive(n_dice, target_sum_for_combination, 0, [])
+        chosen_combo_sides = find_first_combination_recursive(
+            n_dice, target_sum_for_combination, 0, []
+        )
 
         if chosen_combo_sides:
-            min_value_from_dice_combo = n_dice 
-            
             offset = min_val - n_dice
-            
-            dice_str_parts = [f"1d{s}" for s in chosen_combo_sides]
-            result_str = "+".join(dice_str_parts)
+            # Merge repeated dice into, e.g., 2d20 instead of 1d20+1d20
+            dice_str = merge_dice_terms(chosen_combo_sides)
             
             if offset > 0:
-                result_str += f"+{offset}"
+                dice_str += f"+{offset}"
             elif offset < 0:
-                result_str += f"{offset}"
+                dice_str += f"{offset}"
             
-            results_to_print.append(result_str)
+            results_to_print.append(dice_str)
             found_solution_for_line = True
             break
 
